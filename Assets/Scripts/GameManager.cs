@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour
     {
         if (scene.name == "GamePlay")
         {
+            players[CharIndex].transform.position = new Vector3(0f, 0f, 0f);
             Instantiate(players[CharIndex]);
         }
     }

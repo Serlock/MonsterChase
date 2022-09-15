@@ -14,6 +14,9 @@ public class MonsterSpawner : MonoBehaviour
 
     private int randomIndex, randomSide;
 
+    [HideInInspector]
+    public static int monsterScore = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -42,6 +45,7 @@ public class MonsterSpawner : MonoBehaviour
                 spawnedMonster.GetComponent<Monster>().speed = -Random.Range(4, 10);
                 spawnedMonster.transform.localScale = new Vector3(-1f, 1f, 1f);
             }
+            monsterScore++;
         }
     }
 }
