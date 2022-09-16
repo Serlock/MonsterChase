@@ -15,11 +15,13 @@ public class GamePlayUIController : MonoBehaviour
 
     public void RestartGame()
     {
+        MonsterSpawner.monsterScore = 0;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void BackToMainMenu()
     {
+        MonsterSpawner.monsterScore = 0;
         SceneManager.LoadScene("MainMenu");
     }
 }
