@@ -67,16 +67,26 @@ public class Player : MonoBehaviour
 
     void PlayerJump()
     {
-        if (Input.GetButtonDown("Jump") && isGrounded == true)
+        if (Input.GetButtonDown("Jump"))
         {
-            myBody.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
-            anim.SetBool(JUMP_ANIMATION, true);
-            isGrounded = false;
+            if (isGrounded == true)
+            {
+                myBody.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+                anim.SetBool(JUMP_ANIMATION, true);
+                isGrounded = false;
+            }
+            else
+            {
+                myBody.AddForce(new Vector2(0f, -jumpForce * 2), ForceMode2D.Impulse);
+            }
         }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        Vector2 direction = new Vector2();
+
+        Debug.Log(direction.y);
         if (collision.gameObject.CompareTag(GROUND_TAG))
         {
             isGrounded = true;
@@ -85,14 +95,22 @@ public class Player : MonoBehaviour
 
         if (collision.gameObject.CompareTag(ENEMY_TAG))
         {
-            Destroy(gameObject);
-            SceneManager.LoadScene("Credits");
+            direction = collision.GetContact(0).normal;
+            if (direction.y > 0.8 && direction.y < 1)
+            {
+                Destroy(collision.gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
+                SceneManager.LoadScene("Credits");
+            }
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerEnter2d(Collider2D collider)
     {
-        if (collision.CompareTag(ENEMY_TAG))
+        if (collider.CompareTag(ENEMY_TAG))
         {
             Destroy(gameObject);
             SceneManager.LoadScene("Credits");
